@@ -33,3 +33,18 @@ apt-get update && \
 ```
 python3 -m pip install --upgrade {mytritonserver}/clients/python/tritonclient-2.12.0-py3-none-linux_aarch64.whl[all]
 ```
+
+- Download sample Triton ready model files: https://www.dropbox.com/s/232bx8o814z8xqt/tritonmodels.zip?dl=0
+
+# Test the server
+```
+BACKEND_DIR=/opt/tritonserver/backends
+MODEL_DIR=/home/user/tritonmodels
+
+tritonserver --model-repository=$MODEL_DIR --backend-directory=$BACKEND_DIR --backend-config=tensorflow,version=2 --strict-model-config-false
+```
+
+# Check server inference statistics
+```
+perf_analyzer -m cocoD0 --shape input_tensor:1,720,1280,3
+```
